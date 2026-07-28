@@ -1,0 +1,21 @@
+services:
+  llm01-2025-csedu-2026:
+    image: ghcr.io/katarzynamazur/llm01-2025-csedu-2026:latest
+    ports:
+      - "5000:5000"
+    networks:
+      - app-network
+  ollama:
+    image: ghcr.io/katarzynamazur/ollama-mistral-csedu-2026:latest
+    expose:
+     - 11434/tcp
+    ports:
+     - 11434:11434/tcp
+    healthcheck:
+      test: ollama --version || exit 1
+    command: serve
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
